@@ -9,14 +9,14 @@ const Maintenances = () => {
   return (
     <DismissKeyboard>
       <Container>
-
+        <Title>Manutenções</Title>
         <List
           keyboardShouldpersistTaps="handled"
           data={[
             {
               id: 1,
-              name: "Troca de Óleo",
-              price: parseFloat(12.50),
+              service: "Troca de Óleo",
+              price: 12.50,
               date: "01/01/2021"
 
             },

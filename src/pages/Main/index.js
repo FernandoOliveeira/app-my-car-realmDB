@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useState } from 'react';
 import uuid from 'react-native-uuid';
 
@@ -10,15 +10,19 @@ import { Container, Title, Form, FormView, FormText, Input, Submit, SubmitText }
 
 const Main = () => {
   // Hooks
+  const [nameInput, setNameInput] = useState('');
   const [serviceInput, setServiceInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
+  const [laborInput, setLaborInput] = useState('');
   const [dateInput, setDateInput] = useState('');
 
   const saveRepository = async (maintenanceList) => {
     const data = {
       id: uuid.v4(),
+      name: maintenanceList.nameInput,
       service: maintenanceList.serviceInput,
       price: maintenanceList.priceInput,
+      labor: maintenanceList.laborInput,
       date: maintenanceList.dateInput,
     };
 
@@ -35,14 +39,17 @@ const Main = () => {
   const handleAddMaintenance = () => {
     try {
       let price = parseFloat(priceInput);
+      let labor = parseFloat(laborInput)
 
-      const list = { serviceInput, priceInput: price, dateInput }
+      const list = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
       saveRepository(list);
 
       // Set all inputs to empty
+      setNameInput('');
       setServiceInput('');
       setPriceInput('');
+      setLaborInput('');
       setDateInput('');
 
       Keyboard.dismiss();
@@ -53,52 +60,74 @@ const Main = () => {
 
   return (
     <DismissKeyboard>
-
       <Container>
+        <ScrollView>
+          <KeyboardAvoidingView>
 
-        {/* Title */}
-        <Title>Novo Registro</Title>
+            {/* Title */}
+            <Title>Novo Registro</Title>
 
-        <Form>
-          {/* Service */}
-          <FormView>
-            <FormText>Serviço:</FormText>
-            <Input
-              value={serviceInput}
-              onChangeText={setServiceInput}
-              placeholder="Ex.: Troca de Óleo"
-            />
-          </FormView>
+            <Form>
+              {/* Name */}
+              <FormView>
+                <FormText>Nome:</FormText>
+                <Input
+                  value={nameInput}
+                  onChangeText={setNameInput}
+                  placeholder="Ex.: Mecânica de Autos"
+                />
+              </FormView>
 
-          {/* Price */}
-          <FormView>
-            <FormText>Valor:</FormText>
-            <Input
-              value={priceInput}
-              onChangeText={setPriceInput}
-              placeholder="Preço:"
-            />
-          </FormView>
+              {/* Service */}
+              <FormView>
+                <FormText>Serviço:</FormText>
+                <Input
+                  value={serviceInput}
+                  onChangeText={setServiceInput}
+                  placeholder="Ex.: Troca de Óleo"
+                />
+              </FormView>
 
-          {/* Date */}
-          <FormView>
-            <FormText>Data:</FormText>
-            <Input
-              value={dateInput}
-              onChangeText={setDateInput}
-              placeholder="dd/mm/aaaa"
-            />
-          </FormView>
+              {/* Price */}
+              <FormView>
+                <FormText>Valor:</FormText>
+                <Input
+                  value={priceInput}
+                  onChangeText={setPriceInput}
+                  placeholder="Preço:"
+                />
+              </FormView>
 
-          {/* Submit */}
-          <Submit onPress={handleAddMaintenance}>
-            <SubmitText>Salvar</SubmitText>
-          </Submit>
-        </Form>
+              {/* Labor */}
+              <FormView>
+                <FormText>Mão de Obra:</FormText>
+                <Input
+                  value={laborInput}
+                  onChangeText={setLaborInput}
+                  placeholder="Valor da Mão de Obra:"
+                />
+              </FormView>
 
+              {/* Date */}
+              <FormView>
+                <FormText>Data:</FormText>
+                <Input
+                  value={dateInput}
+                  onChangeText={setDateInput}
+                  placeholder="dd/mm/aaaa"
+                />
+              </FormView>
+
+              {/* Submit */}
+              <Submit onPress={handleAddMaintenance}>
+                <SubmitText>Salvar</SubmitText>
+              </Submit>
+            </Form>
+
+          </KeyboardAvoidingView>
+        </ScrollView>
       </Container>
-
-    </DismissKeyboard>
+    </DismissKeyboard >
   );
 }
 

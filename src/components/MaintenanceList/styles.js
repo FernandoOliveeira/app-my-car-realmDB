@@ -7,11 +7,15 @@ background: #FFF;
 margin-bottom: 15px;
 `;
 
+export const Name = styled.Text`
+font-size: 25px;
+font-weight: bold;
+color: #333;
+`;
 export const Service = styled.Text.attrs({
   numberOfLines: 5,
 })`
 font-size: 25px;
-font-weight: bold;
 color: #333;
 `;
 
@@ -23,6 +27,20 @@ color: #666;
 `;
 
 export const Date = styled.Text`
+font-size: 20px;
+margin-top: 5px;
+line-height: 20px;
+color: #666;
+`;
+
+export const Labor = styled.Text`
+font-size: 20px;
+margin-top: 5px;
+line-height: 20px;
+color: #666;
+`;
+
+export const TotalPrice = styled.Text`
 font-size: 20px;
 margin-top: 5px;
 line-height: 20px;

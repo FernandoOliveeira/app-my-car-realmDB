@@ -13,7 +13,7 @@ const Maintenances = () => {
     const loadMaintenances = async () => {
       const realm = await getRealm();
 
-      const data = realm.objects('List');
+      const data = realm.objects('List').sorted('date');
 
       setMaintenance(data);
     }

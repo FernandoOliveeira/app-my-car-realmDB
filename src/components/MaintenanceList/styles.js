@@ -1,5 +1,14 @@
 import styled from 'styled-components/native';
 
+export const CustomView = styled.View`
+flex: 1;
+flex-direction: row;
+padding-top: 5px
+padding-right: 25px
+margin: 0 0 5px
+align-items: center;
+`;
+
 export const Container = styled.View`
 padding: 20px;
 border-radius: 5px;

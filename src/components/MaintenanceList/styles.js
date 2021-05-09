@@ -10,20 +10,20 @@ margin-bottom: 15px;
 export const Service = styled.Text.attrs({
   numberOfLines: 5,
 })`
-font-size: 18px;
+font-size: 25px;
 font-weight: bold;
 color: #333;
 `;
 
 export const Price = styled.Text`
-font-size: 15px;
+font-size: 20px;
 margin-top: 5px;
 line-height: 20px;
 color: #666;
 `;
 
 export const Date = styled.Text`
-font-size: 15px;
+font-size: 20px;
 margin-top: 5px;
 line-height: 20px;
 color: #666;

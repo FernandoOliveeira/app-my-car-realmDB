@@ -1,42 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import getRealm from '~/services/realm';
-import { DismissKeyboard } from '~/components/DismissKeyboard';
+import { RefreshControl } from 'react-native';
 
 import MaintenanceList from '~/components/MaintenanceList';
 import { Container, Title, List } from './styles';
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 const Maintenances = () => {
+  // Hooks
   const [maintenance, setMaintenance] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
+  // Load the all registers from database and save in to maintenance hook
+  const loadMaintenances = async () => {
+    const realm = await getRealm();
+
+    const data = realm.objects('List');
+
+    setMaintenance(data);
+  }
+
+
+  // Load all the maintenances in to the screen
   useEffect(() => {
-    const loadMaintenances = async () => {
-      const realm = await getRealm();
-
-      const data = realm.objects('List').sorted('date');
-
-      setMaintenance(data);
-    }
-
     loadMaintenances();
-    console.log(maintenance);
+  }, []);
+
+
+  // Push the screen down to refresh
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      setRefreshing(false);
+      loadMaintenances();
+    });
+
   }, []);
 
   return (
-    <DismissKeyboard>
-      <Container>
-        <Title>Manutenções</Title>
-        <List
-          keyboardShouldPersistTaps="handled"
-          data={maintenance}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => (
-            <MaintenanceList data={item} />
-          )}
-        />
+    <Container>
 
-      </Container>
-    </DismissKeyboard>
+      <List
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+        data={maintenance}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => (
+          <MaintenanceList data={item} />
+        )}
+      />
+    </Container>
   );
 }
 

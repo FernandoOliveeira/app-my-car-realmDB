@@ -16,7 +16,8 @@ const Main = () => {
   const [laborInput, setLaborInput] = useState('');
   const [dateInput, setDateInput] = useState('');
 
-  const saveRepository = async (maintenanceList) => {
+  // Save the maintenance register in database
+  const saveMaintenance = async (maintenanceList) => {
     const data = {
       id: uuid.v4(),
       name: maintenanceList.nameInput,
@@ -36,6 +37,7 @@ const Main = () => {
 
   }
 
+  // Add a new register in database
   const handleAddMaintenance = () => {
     try {
       let price = parseFloat(priceInput);
@@ -43,7 +45,7 @@ const Main = () => {
 
       const list = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
-      saveRepository(list);
+      saveMaintenance(list);
 
       // Set all inputs to empty
       setNameInput('');

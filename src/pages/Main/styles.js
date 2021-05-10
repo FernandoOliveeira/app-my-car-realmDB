@@ -9,20 +9,22 @@ export const Container = styled(LinearGradient).attrs({
   end: { x: 1, y: 0 }
 })`
   flex: 1;
-  padding-top: ${15 + getStatusBarHeight(true)}px;
+  padding-top: ${getStatusBarHeight(true)}px;
 `;
 
 export const Title = styled.Text`
 font-size: 32px;
 color: #FFF;
 font-weight: bold;
-padding: 0 20px;
+padding-top: 3%;
+padding-left: 5%;
 `;
 
 export const Form = styled.View`
 flex-direction: column;
-margin-top: 50px;
-padding: 0 20px;
+padding-left: 5%;
+padding-right: 5%;
+padding-bottom: 5%;
 `;
 
 export const FormView = styled.View`

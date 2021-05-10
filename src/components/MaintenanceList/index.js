@@ -9,7 +9,6 @@ const MaintenanceList = ({ data }) => {
     <Container>
 
       <CustomView>
-
         <Name>{data.name}</Name>
       </CustomView>
 

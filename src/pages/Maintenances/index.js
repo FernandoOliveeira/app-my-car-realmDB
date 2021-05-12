@@ -42,7 +42,10 @@ const Maintenances = () => {
 
   return (
     <Container>
+      {/* Title */}
+      <Title>Manutenções</Title>
 
+      {/* List */}
       <List
         refreshControl={
           <RefreshControl

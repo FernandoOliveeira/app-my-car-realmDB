@@ -5,9 +5,16 @@ import { Modal, ScrollView } from 'react-native';
 
 import { Container, CustomView, Name, Price, Service, Date, Labor, TotalPrice, ModalTitle, ModalSubmitView, ModalContainer, ModalCustomViewInput, ModalFormText, ModalSubmitText, ModalForm, ModalSubmit, Submit, SubmitText, CustomViewRefreshDelete, ModalCustomView, ModalInput } from './styles';
 
+
 const MaintenanceList = ({ data }) => {
   // Hooks  
   const [modalVisible, setModalVisible] = useState(false);
+  const [nameInput, setNameInput] = useState(data.name);
+  const [serviceInput, setServiceInput] = useState(data.service);
+  const [priceInput, setPriceInput] = useState(Number(data.price).toString());
+  const [laborInput, setLaborInput] = useState(Number(data.labor).toString());
+  const [dateInput, setDateInput] = useState(data.date);
+
 
 
   return (
@@ -83,8 +90,8 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Nome:</ModalFormText>
                 <ModalInput
-                  value={data.name}
-                  onChangeText={() => { }}
+                  value={nameInput}
+                  onChangeText={setNameInput}
                   placeholder="Ex.: Mecânica de Autos"
                 />
               </ModalCustomViewInput>
@@ -92,8 +99,8 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Serviço:</ModalFormText>
                 <ModalInput
-                  value={data.service}
-                  onChangeText={() => { }}
+                  value={serviceInput}
+                  onChangeText={setServiceInput}
                   placeholder="Ex.: Troca de Óleo"
                 />
               </ModalCustomViewInput>
@@ -101,8 +108,8 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Valor:</ModalFormText>
                 <ModalInput
-                  value={(data.price).toString()}
-                  onChangeText={() => { }}
+                  value={priceInput}
+                  onChangeText={setPriceInput}
                   placeholder="Preço:"
                 />
               </ModalCustomViewInput>
@@ -110,8 +117,8 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Mão de Obra:</ModalFormText>
                 <ModalInput
-                  value={(data.labor).toString()}
-                  onChangeText={() => { }}
+                  value={laborInput}
+                  onChangeText={setLaborInput}
                   placeholder="Valor da Mão de Obra"
                 />
               </ModalCustomViewInput>
@@ -119,8 +126,8 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Data:</ModalFormText>
                 <ModalInput
-                  value={data.date}
-                  onChangeText={() => { }}
+                  value={dateInput}
+                  onChangeText={setDateInput}
                   placeholder="DD/MM/AAAA"
                 />
               </ModalCustomViewInput>
@@ -136,7 +143,16 @@ const MaintenanceList = ({ data }) => {
                 </ModalSubmitView>
 
                 <ModalSubmitView>
-                  <ModalSubmit onPress={() => setModalVisible(false)}>
+                  <ModalSubmit onPress={() => {
+                    // If the update is canceled, reset the input values
+                    setNameInput(data.name);
+                    setServiceInput(data.service);
+                    setPriceInput(Number(data.price).toString());
+                    setLaborInput(Number(data.labor).toString());
+                    setDateInput(data.date);
+
+                    setModalVisible(false);
+                  }}>
                     <MaterialCommunityIcons name={'cancel'} size={25} color={'white'} style={{ paddingRight: 5 }} />
                     <ModalSubmitText>Cancelar</ModalSubmitText>
                   </ModalSubmit>

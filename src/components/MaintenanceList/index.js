@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Modal, ScrollView } from 'react-native';
+import { Modal, ScrollView, ToastAndroid, Alert } from 'react-native';
 
 import { Container, CustomView, Name, Price, Service, Date, Labor, TotalPrice, ModalTitle, ModalSubmitView, ModalContainer, ModalCustomViewInput, ModalFormText, ModalSubmitText, ModalForm, ModalSubmit, Submit, SubmitText, CustomViewRefreshDelete, ModalCustomView, ModalInput } from './styles';
+import Realm from 'realm';
+import getRealm from '~/services/realm'
 
 
 const MaintenanceList = ({ data }) => {
@@ -15,6 +17,49 @@ const MaintenanceList = ({ data }) => {
   const [laborInput, setLaborInput] = useState(Number(data.labor).toString());
   const [dateInput, setDateInput] = useState(data.date);
 
+
+  // Toast
+  const toast = (message) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  }
+
+  // Realm
+  const realmDelete = () => {
+    try {
+      const realm = new Realm(getRealm())
+
+      realm.write(() => {
+        realm.delete(realm.objectForPrimaryKey('List', data.id));
+      });
+
+      toast('Registro deletado com sucesso!');
+
+    } catch (err) {
+      toast('Erro ao deletar registro. Tente novamente.');
+
+      console.log(`Failed to delete register: ${err}`);
+    }
+
+
+  }
+
+  // Delete Button Alert
+  const twoButtonsAlert = () => Alert.alert(
+    "Deletar",
+    "Deseja mesmo apagar este registro ?",
+    [
+      {
+        text: "Sim",
+        onPress: () => { realmDelete(); }
+      },
+      {
+        text: "Cancelar",
+        onPress: () => { }
+
+      }
+    ]
+
+  );
 
 
   return (
@@ -61,7 +106,9 @@ const MaintenanceList = ({ data }) => {
         </CustomView>
 
         <CustomView>
-          <Submit>
+          <Submit
+            onPress={twoButtonsAlert}
+          >
             <Ionicons name={'trash-outline'} size={25} color={'#333'} style={{ paddingRight: '3%' }} />
             <SubmitText>Deletar</SubmitText>
           </Submit>

@@ -33,7 +33,7 @@ const Maintenances = () => {
   // Push the screen down to refresh
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(2000).then(() => {
+    wait(1000).then(() => {
       setRefreshing(false);
       loadMaintenances();
     });

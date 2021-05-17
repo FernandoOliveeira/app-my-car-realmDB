@@ -9,10 +9,11 @@ const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-const Maintenances = () => {
+const Maintenances = ({ navigation }) => {
   // Hooks
   const [maintenance, setMaintenance] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+
 
   // Load the all registers from database and save in to maintenance hook
   const loadMaintenances = async () => {
@@ -26,11 +27,13 @@ const Maintenances = () => {
 
   // Load all the maintenances in to the screen
   useEffect(() => {
-    loadMaintenances();
-  }, []);
+    const load = navigation.addListener('focus', () => loadMaintenances());
+
+    return load
+  }, [navigation]);
 
 
-  // Push the screen down to refresh
+  // Push the screen down to refresh event
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(1000).then(() => {

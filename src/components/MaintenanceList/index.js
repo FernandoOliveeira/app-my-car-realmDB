@@ -39,12 +39,49 @@ const MaintenanceList = ({ data }) => {
 
       console.log(`Failed to delete register: ${err}`);
     }
+  }
 
+  const realmUpdate = (updateList) => {
+    const dataList = {
+      id: data.id,
+      name: updateList.nameInput,
+      service: updateList.serviceInput,
+      price: updateList.priceInput,
+      labor: updateList.laborInput,
+      date: updateList.dateInput,
+    }
 
+    const realm = new Realm(getRealm());
+
+    realm.write(() => {
+      realm.create('List', dataList, 'modified');
+    });
+  }
+
+  // Update Modal Button
+  const handleUpdateButton = () => {
+    try {
+      let price = parseFloat(priceInput);
+      let labor = parseFloat(laborInput);
+
+      const updateList = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
+
+      realmUpdate(updateList);
+
+      setModalVisible(false);
+
+      toast('Registro atualizado com sucesso!');
+
+    } catch (err) {
+      toast('Erro ao atualizar. Tente novamente.');
+
+      console.log(`Failed to update. Error: ${err}`);
+
+    }
   }
 
   // Delete Button Alert
-  const twoButtonsAlert = () => Alert.alert(
+  const handleDeleteButton = () => Alert.alert(
     "Deletar",
     "Deseja mesmo apagar este registro ?",
     [
@@ -107,7 +144,7 @@ const MaintenanceList = ({ data }) => {
 
         <CustomView>
           <Submit
-            onPress={twoButtonsAlert}
+            onPress={handleDeleteButton}
           >
             <Ionicons name={'trash-outline'} size={25} color={'#333'} style={{ paddingRight: '3%' }} />
             <SubmitText>Deletar</SubmitText>
@@ -183,7 +220,7 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomView>
 
                 <ModalSubmitView>
-                  <ModalSubmit onPress={() => { }}>
+                  <ModalSubmit onPress={handleUpdateButton}>
                     <Ionicons name={'refresh'} size={25} color={'white'} style={{ paddingRight: 5 }} />
                     <ModalSubmitText>Atualizar</ModalSubmitText>
                   </ModalSubmit>

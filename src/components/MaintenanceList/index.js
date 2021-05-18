@@ -98,6 +98,18 @@ const MaintenanceList = ({ data }) => {
 
   );
 
+  // Format the money values to BRL format
+  const moneyFormat = (value) => {
+    value = value.replace(/\D/g, "");
+    value = value.replace(/(\d)(\d{2})$/, "$1,$2");
+    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
+
+    return value
+  }
+  // Set number to only two decimals numbers
+  const strip = number => moneyFormat((parseFloat(number.toPrecision(12)).toFixed(2) / 100).toString().replace('.', ','));
+
+
 
   return (
     <Container>
@@ -113,17 +125,17 @@ const MaintenanceList = ({ data }) => {
 
       <CustomView>
         <Ionicons name={'cash-outline'} size={30} color={'#666'} style={{ paddingRight: '3%' }} />
-        <Price>Preço: {data.price} R$</Price>
+        <Price>Preço: {strip(data.price)} R$</Price>
       </CustomView>
 
       <CustomView>
         <Ionicons name={'hammer-outline'} size={30} color={'#666'} style={{ paddingRight: '3%' }} />
-        <Labor>Mão de Obra: {data.labor} R$</Labor>
+        <Labor>Mão de Obra: {strip(data.labor)} R$</Labor>
       </CustomView>
 
       <CustomView>
         <MaterialCommunityIcons name={'barcode'} size={30} color={'#666'} style={{ paddingRight: '3%' }} />
-        <TotalPrice>Total: {data.labor + data.price} R$</TotalPrice>
+        <TotalPrice>Total: {strip(data.labor + data.price)} R$</TotalPrice>
       </CustomView>
 
       <CustomView>

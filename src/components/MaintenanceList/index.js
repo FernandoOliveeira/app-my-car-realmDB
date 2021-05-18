@@ -8,13 +8,26 @@ import Realm from 'realm';
 import getRealm from '~/services/realm'
 
 
+// Format the money values to BRL format
+const moneyFormat = (value) => {
+  value = value.replace(/\D/g, "");
+  value = value.replace(/(\d)(\d{2})$/, "$1,$2");
+  value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
+
+  return value
+}
+// Set number to only two decimals numbers
+const strip = number => moneyFormat((parseFloat(number.toPrecision(12)).toFixed(2) / 100).toString().replace('.', ','));
+
+
+
 const MaintenanceList = ({ data }) => {
   // Hooks  
   const [modalVisible, setModalVisible] = useState(false);
   const [nameInput, setNameInput] = useState(data.name);
   const [serviceInput, setServiceInput] = useState(data.service);
-  const [priceInput, setPriceInput] = useState(Number(data.price).toString());
-  const [laborInput, setLaborInput] = useState(Number(data.labor).toString());
+  const [priceInput, setPriceInput] = useState(strip(Number(data.price)));
+  const [laborInput, setLaborInput] = useState(strip(Number(data.labor)));
   const [dateInput, setDateInput] = useState(data.date);
 
 
@@ -61,8 +74,8 @@ const MaintenanceList = ({ data }) => {
   // Update Modal Button
   const handleUpdateButton = () => {
     try {
-      let price = parseFloat(priceInput);
-      let labor = parseFloat(laborInput);
+      let price = parseFloat(priceInput.replace(',', '.').replace(".", ""));
+      let labor = parseFloat(laborInput.replace(',', '.').replace(".", ""));
 
       const updateList = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
@@ -97,18 +110,6 @@ const MaintenanceList = ({ data }) => {
     ]
 
   );
-
-  // Format the money values to BRL format
-  const moneyFormat = (value) => {
-    value = value.replace(/\D/g, "");
-    value = value.replace(/(\d)(\d{2})$/, "$1,$2");
-    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
-
-    return value
-  }
-  // Set number to only two decimals numbers
-  const strip = number => moneyFormat((parseFloat(number.toPrecision(12)).toFixed(2) / 100).toString().replace('.', ','));
-
 
 
   return (
@@ -204,8 +205,14 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Valor:</ModalFormText>
                 <ModalInput
+                  keyboardType="numeric"
                   value={priceInput}
-                  onChangeText={setPriceInput}
+                  onChangeText={(text) => {
+                    text = text.replace(/\D/g, "");
+                    text = text.replace(/(\d)(\d{2})$/, "$1,$2");
+                    text = text.replace(/(?=(\d{3})+(\D))\B/g, ".");
+                    setPriceInput(text);
+                  }}
                   placeholder="Preço:"
                 />
               </ModalCustomViewInput>
@@ -213,8 +220,14 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Mão de Obra:</ModalFormText>
                 <ModalInput
+                  keyboardType="numeric"
                   value={laborInput}
-                  onChangeText={setLaborInput}
+                  onChangeText={(text) => {
+                    text = text.replace(/\D/g, "");
+                    text = text.replace(/(\d)(\d{2})$/, "$1,$2");
+                    text = text.replace(/(?=(\d{3})+(\D))\B/g, ".");
+                    setLaborInput(text);
+                  }}
                   placeholder="Valor da Mão de Obra"
                 />
               </ModalCustomViewInput>
@@ -222,8 +235,14 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText>Data:</ModalFormText>
                 <ModalInput
+                  keyboardType="numeric"
                   value={dateInput}
-                  onChangeText={setDateInput}
+                  onChangeText={(text) => {
+                    text = text.replace(/\D/g, "");
+                    text = text.replace(/^(\d{2})(\d)/g, "$1/$2");
+                    text = text.replace(/(\d)(\d{4})$/, "$1/$2");
+                    setDateInput(text);
+                  }}
                   placeholder="DD/MM/AAAA"
                 />
               </ModalCustomViewInput>
@@ -243,8 +262,8 @@ const MaintenanceList = ({ data }) => {
                     // If the update is canceled, reset the input values
                     setNameInput(data.name);
                     setServiceInput(data.service);
-                    setPriceInput(Number(data.price).toString());
-                    setLaborInput(Number(data.labor).toString());
+                    setPriceInput(strip(Number(data.price)));
+                    setLaborInput(strip(Number(data.labor)));
                     setDateInput(data.date);
 
                     setModalVisible(false);

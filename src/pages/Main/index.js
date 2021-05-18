@@ -1,11 +1,12 @@
 import React from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, ToastAndroid, ScrollView } from 'react-native';
 import { useState } from 'react';
 import uuid from 'react-native-uuid';
 
 import getRealm from '~/services/realm';
 import { DismissKeyboard } from '~/components/DismissKeyboard/index';
 import { Container, Title, Form, FormView, FormText, Input, Submit, SubmitText } from './styles';
+import { objectValidation } from '~/validations';
 
 
 const Main = () => {
@@ -15,6 +16,11 @@ const Main = () => {
   const [priceInput, setPriceInput] = useState('');
   const [laborInput, setLaborInput] = useState('');
   const [dateInput, setDateInput] = useState('');
+
+
+  // Toast
+  const toast = (message) => ToastAndroid.show(message, ToastAndroid.SHORT);
+
 
   // Save the maintenance register in database
   const saveMaintenance = async (maintenanceList) => {
@@ -40,23 +46,32 @@ const Main = () => {
   // Add a new register in database
   const handleAddMaintenance = () => {
     try {
-      let price = parseFloat(priceInput);
-      let labor = parseFloat(laborInput)
+      let price = parseFloat(priceInput.replace(',', '.').replace(".", ""));
+      let labor = parseFloat(laborInput.replace(',', '.').replace(".", ""))
 
       const list = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
-      saveMaintenance(list);
+      if (objectValidation(list)) {
 
-      // Set all inputs to empty
-      setNameInput('');
-      setServiceInput('');
-      setPriceInput('');
-      setLaborInput('');
-      setDateInput('');
+        saveMaintenance(list);
 
-      Keyboard.dismiss();
+        // Set all inputs to empty
+        setNameInput('');
+        setServiceInput('');
+        setPriceInput('');
+        setLaborInput('');
+        setDateInput('');
+
+        Keyboard.dismiss();
+        toast('Registro salvo com sucesso!');
+
+      } else {
+        toast('Todos os campos devem ser preenchidos!');
+      }
     } catch (err) {
-      console.log(`Failed to save maintenance: ${err}`)
+      toast('Não foi possível salvar o registro. Tente novamente.');
+
+      console.log(`Failed to save maintenance: ${err}`);
     }
   }
 
@@ -94,8 +109,14 @@ const Main = () => {
               <FormView>
                 <FormText>Valor:</FormText>
                 <Input
+                  keyboardType="numeric"
                   value={priceInput}
-                  onChangeText={setPriceInput}
+                  onChangeText={(text) => {
+                    text = text.replace(/\D/g, "");
+                    text = text.replace(/(\d)(\d{2})$/, "$1,$2");
+                    text = text.replace(/(?=(\d{3})+(\D))\B/g, ".");
+                    setPriceInput(text);
+                  }}
                   placeholder="Preço:"
                 />
               </FormView>
@@ -104,8 +125,14 @@ const Main = () => {
               <FormView>
                 <FormText>Mão de Obra:</FormText>
                 <Input
+                  keyboardType="numeric"
                   value={laborInput}
-                  onChangeText={setLaborInput}
+                  onChangeText={(text) => {
+                    text = text.replace(/\D/g, "");
+                    text = text.replace(/(\d)(\d{2})$/, "$1,$2");
+                    text = text.replace(/(?=(\d{3})+(\D))\B/g, ".");
+                    setLaborInput(text);
+                  }}
                   placeholder="Valor da Mão de Obra:"
                 />
               </FormView>
@@ -114,8 +141,15 @@ const Main = () => {
               <FormView>
                 <FormText>Data:</FormText>
                 <Input
+                  keyboardType="numeric"
                   value={dateInput}
-                  onChangeText={setDateInput}
+                  maxLength={10}
+                  onChangeText={(text) => {
+                    text = text.replace(/\D/g, "");
+                    text = text.replace(/^(\d{2})(\d)/g, "$1/$2");
+                    text = text.replace(/(\d)(\d{4})$/, "$1/$2");
+                    setDateInput(text);
+                  }}
                   placeholder="dd/mm/aaaa"
                 />
               </FormView>

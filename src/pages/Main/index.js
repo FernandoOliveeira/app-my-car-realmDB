@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import getRealm from '~/services/realm';
 import { DismissKeyboard } from '~/components/DismissKeyboard/index';
-import { Container, Title, Form, FormView, FormText, Input, Submit, SubmitText } from './styles';
+import { Container, Title, Form, Input, Submit, SubmitText, FormNameView, FormServiceView, FormPriceView, FormLaborView, FormDateView } from './styles';
 import { objectValidation } from '~/validations';
 
 
@@ -18,6 +18,18 @@ const Main = () => {
   const [priceInput, setPriceInput] = useState('');
   const [laborInput, setLaborInput] = useState('');
   const [dateInput, setDateInput] = useState('');
+
+  const [nameFocus, setNameFocus] = useState(false);
+  const [serviceFocus, setServiceFocus] = useState(false);
+  const [priceFocus, setPriceFocus] = useState(false);
+  const [laborFocus, setLaborFocus] = useState(false);
+  const [dateFocus, setDateFocus] = useState(false);
+
+  const [nameError, setNameError] = useState(false);
+  const [serviceError, setServiceError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [laborError, setLaborError] = useState(false);
+  const [dateError, setDateError] = useState(false);
 
 
   // Toast
@@ -64,10 +76,35 @@ const Main = () => {
         setLaborInput('');
         setDateInput('');
 
+        // Set all error to false
+        setNameError(false);
+        setServiceError(false);
+        setPriceError(false);
+        setLaborError(false);
+        setDateError(false);
+
         Keyboard.dismiss();
         toast('Registro salvo com sucesso!');
 
       } else {
+
+        // Verify if all inputs has values. Case not,
+        if (!nameInput.trim()) {
+          setNameError(true);
+        }
+        if (!serviceInput.trim()) {
+          setServiceError(true);
+        }
+        if (!priceInput.trim()) {
+          setPriceError(true);
+        }
+        if (!laborInput.trim()) {
+          setLaborError(true);
+        }
+        if (!dateInput.trim()) {
+          setDateError(true);
+        }
+
         toast('Todos os campos devem ser preenchidos!');
       }
     } catch (err) {
@@ -90,29 +127,44 @@ const Main = () => {
 
             <Form>
               {/* Name */}
-              <FormView>
-                <MaterialCommunityIcons name={'garage'} size={35} color={'#666'} style={{ paddingRight: '1%' }} />
+              <FormNameView
+                focus={nameFocus}
+                onFocus={() => setNameFocus(true)}
+                onBlur={() => setNameFocus(false)}
+              >
+                <MaterialCommunityIcons name={'garage'} size={35} color={nameError ? 'tomato' : '#666'} style={{ paddingRight: '1%' }} />
                 <Input
+                  placeholderTextColor={nameError ? 'tomato' : '#666'}
                   value={nameInput}
                   onChangeText={setNameInput}
                   placeholder="Ex.: Mecânica de Autos"
                 />
-              </FormView>
+              </FormNameView>
 
               {/* Service */}
-              <FormView>
-                <Ionicons name={'construct-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
+              <FormServiceView
+                focus={serviceFocus}
+                onFocus={() => setServiceFocus(true)}
+                onBlur={() => setServiceFocus(false)}
+              >
+                <Ionicons name={'construct-outline'} size={30} color={serviceError ? 'tomato' : '#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
+                  placeholderTextColor={serviceError ? 'tomato' : '#666'}
                   value={serviceInput}
                   onChangeText={setServiceInput}
                   placeholder="Ex.: Troca de Óleo"
                 />
-              </FormView>
+              </FormServiceView>
 
               {/* Price */}
-              <FormView>
-                <Ionicons name={'cash-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
+              <FormPriceView
+                focus={priceFocus}
+                onFocus={() => setPriceFocus(true)}
+                onBlur={() => setPriceFocus(false)}
+              >
+                <Ionicons name={'cash-outline'} size={30} color={priceError ? 'tomato' : '#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
+                  placeholderTextColor={priceError ? 'tomato' : '#666'}
                   keyboardType="numeric"
                   value={priceInput}
                   onChangeText={(text) => {
@@ -123,12 +175,17 @@ const Main = () => {
                   }}
                   placeholder="Preço:"
                 />
-              </FormView>
+              </FormPriceView>
 
               {/* Labor */}
-              <FormView>
-                <Ionicons name={'hammer-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
+              <FormLaborView
+                focus={laborFocus}
+                onFocus={() => setLaborFocus(true)}
+                onBlur={() => setLaborFocus(false)}
+              >
+                <Ionicons name={'hammer-outline'} size={30} color={laborError ? 'tomato' : '#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
+                  placeholderTextColor={laborError ? 'tomato' : '#666'}
                   keyboardType="numeric"
                   value={laborInput}
                   onChangeText={(text) => {
@@ -139,12 +196,17 @@ const Main = () => {
                   }}
                   placeholder="Valor da Mão de Obra:"
                 />
-              </FormView>
+              </FormLaborView>
 
               {/* Date */}
-              <FormView>
-                <Ionicons name={'calendar-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
+              <FormDateView
+                focus={dateFocus}
+                onFocus={() => setDateFocus(true)}
+                onBlur={() => setDateFocus(false)}
+              >
+                <Ionicons name={'calendar-outline'} size={30} color={dateError ? 'tomato' : '#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
+                  placeholderTextColor={dateError ? 'tomato' : '#666'}
                   keyboardType="numeric"
                   value={dateInput}
                   maxLength={10}
@@ -156,7 +218,7 @@ const Main = () => {
                   }}
                   placeholder="dd/mm/aaaa"
                 />
-              </FormView>
+              </FormDateView>
 
               {/* Submit */}
               <Submit onPress={handleAddMaintenance}>

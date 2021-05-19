@@ -22,14 +22,20 @@ padding-left: 5%;
 
 export const Form = styled.View`
 flex-direction: column;
+margin-top: 5%;
 padding-left: 5%;
 padding-right: 5%;
 padding-bottom: 5%;
 `;
 
 export const FormView = styled.View`
-margin-top: 5px;
+flex: 1;
+flex-direction: row;
+margin-top: 15px;
 margin-bottom: 5px;
+align-items: center;
+background-color: #FFF;
+border-radius: 5px;
 `;
 
 export const FormText = styled.Text`
@@ -39,13 +45,14 @@ font-weight: bold;
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#999',
+  placeholderTextColor: '#666',
 })`
-padding: 12px 15px;
+flex: 1;
+padding: 15px;
 border-radius: 4px;
 font-size: 16px;
 color: #333;
-background: #FFF;
+background: transparent;
 `;
 
 export const Submit = styled.TouchableOpacity`

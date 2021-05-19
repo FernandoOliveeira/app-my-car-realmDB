@@ -2,6 +2,8 @@ import React from 'react';
 import { Keyboard, KeyboardAvoidingView, ToastAndroid, ScrollView } from 'react-native';
 import { useState } from 'react';
 import uuid from 'react-native-uuid';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import getRealm from '~/services/realm';
 import { DismissKeyboard } from '~/components/DismissKeyboard/index';
@@ -78,7 +80,9 @@ const Main = () => {
   return (
     <DismissKeyboard>
       <Container>
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           <KeyboardAvoidingView>
 
             {/* Title */}
@@ -87,7 +91,7 @@ const Main = () => {
             <Form>
               {/* Name */}
               <FormView>
-                <FormText>Nome:</FormText>
+                <MaterialCommunityIcons name={'garage'} size={35} color={'#666'} style={{ paddingRight: '1%' }} />
                 <Input
                   value={nameInput}
                   onChangeText={setNameInput}
@@ -97,7 +101,7 @@ const Main = () => {
 
               {/* Service */}
               <FormView>
-                <FormText>Serviço:</FormText>
+                <Ionicons name={'construct-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
                   value={serviceInput}
                   onChangeText={setServiceInput}
@@ -107,7 +111,7 @@ const Main = () => {
 
               {/* Price */}
               <FormView>
-                <FormText>Valor:</FormText>
+                <Ionicons name={'cash-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
                   keyboardType="numeric"
                   value={priceInput}
@@ -123,7 +127,7 @@ const Main = () => {
 
               {/* Labor */}
               <FormView>
-                <FormText>Mão de Obra:</FormText>
+                <Ionicons name={'hammer-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
                   keyboardType="numeric"
                   value={laborInput}
@@ -139,7 +143,7 @@ const Main = () => {
 
               {/* Date */}
               <FormView>
-                <FormText>Data:</FormText>
+                <Ionicons name={'calendar-outline'} size={30} color={'#666'} style={{ paddingRight: '2%', paddingLeft: '1.5%' }} />
                 <Input
                   keyboardType="numeric"
                   value={dateInput}

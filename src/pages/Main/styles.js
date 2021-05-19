@@ -28,47 +28,7 @@ padding-right: 5%;
 padding-bottom: 5%;
 `;
 
-export const FormNameView = styled.View`
-flex: 1;
-flex-direction: row;
-margin-top: 15px;
-margin-bottom: 5px;
-align-items: center;
-background-color: #FFF;
-border-radius: 10px;
-border: 3px solid ${props => props.focus ? '#52FFE0' : '#FFF'}
-`;
-export const FormServiceView = styled.View`
-flex: 1;
-flex-direction: row;
-margin-top: 15px;
-margin-bottom: 5px;
-align-items: center;
-background-color: #FFF;
-border-radius: 10px;
-border: 3px solid ${props => props.focus ? '#52FFE0' : '#FFF'}
-`;
-export const FormPriceView = styled.View`
-flex: 1;
-flex-direction: row;
-margin-top: 15px;
-margin-bottom: 5px;
-align-items: center;
-background-color: #FFF;
-border-radius: 10px;
-border: 3px solid ${props => props.focus ? '#52FFE0' : '#FFF'}
-`;
-export const FormLaborView = styled.View`
-flex: 1;
-flex-direction: row;
-margin-top: 15px;
-margin-bottom: 5px;
-align-items: center;
-background-color: #FFF;
-border-radius: 10px;
-border: 3px solid ${props => props.focus ? '#52FFE0' : '#FFF'}
-`;
-export const FormDateView = styled.View`
+export const FormView = styled.View`
 flex: 1;
 flex-direction: row;
 margin-top: 15px;

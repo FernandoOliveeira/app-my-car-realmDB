@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import getRealm from '~/services/realm';
 import { DismissKeyboard } from '~/components/DismissKeyboard/index';
-import { Container, Title, Form, Input, Submit, SubmitText, FormNameView, FormServiceView, FormPriceView, FormLaborView, FormDateView } from './styles';
+import { Container, Title, Form, Input, Submit, SubmitText, FormView } from './styles';
 import { objectValidation } from '~/validations';
 
 
@@ -127,7 +127,7 @@ const Main = () => {
 
             <Form>
               {/* Name */}
-              <FormNameView
+              <FormView
                 focus={nameFocus}
                 onFocus={() => setNameFocus(true)}
                 onBlur={() => setNameFocus(false)}
@@ -139,10 +139,10 @@ const Main = () => {
                   onChangeText={setNameInput}
                   placeholder="Ex.: Mecânica de Autos"
                 />
-              </FormNameView>
+              </FormView>
 
               {/* Service */}
-              <FormServiceView
+              <FormView
                 focus={serviceFocus}
                 onFocus={() => setServiceFocus(true)}
                 onBlur={() => setServiceFocus(false)}
@@ -154,10 +154,10 @@ const Main = () => {
                   onChangeText={setServiceInput}
                   placeholder="Ex.: Troca de Óleo"
                 />
-              </FormServiceView>
+              </FormView>
 
               {/* Price */}
-              <FormPriceView
+              <FormView
                 focus={priceFocus}
                 onFocus={() => setPriceFocus(true)}
                 onBlur={() => setPriceFocus(false)}
@@ -175,10 +175,10 @@ const Main = () => {
                   }}
                   placeholder="Preço:"
                 />
-              </FormPriceView>
+              </FormView>
 
               {/* Labor */}
-              <FormLaborView
+              <FormView
                 focus={laborFocus}
                 onFocus={() => setLaborFocus(true)}
                 onBlur={() => setLaborFocus(false)}
@@ -196,10 +196,10 @@ const Main = () => {
                   }}
                   placeholder="Valor da Mão de Obra:"
                 />
-              </FormLaborView>
+              </FormView>
 
               {/* Date */}
-              <FormDateView
+              <FormView
                 focus={dateFocus}
                 onFocus={() => setDateFocus(true)}
                 onBlur={() => setDateFocus(false)}
@@ -216,9 +216,9 @@ const Main = () => {
                     text = text.replace(/(\d)(\d{4})$/, "$1/$2");
                     setDateInput(text);
                   }}
-                  placeholder="dd/mm/aaaa"
+                  placeholder="DD/MM/AAAA"
                 />
-              </FormDateView>
+              </FormView>
 
               {/* Submit */}
               <Submit onPress={handleAddMaintenance}>

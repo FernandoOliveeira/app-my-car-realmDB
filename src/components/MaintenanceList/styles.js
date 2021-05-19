@@ -132,6 +132,7 @@ border-radius: 5px;
 font-size: 16px;
 color: #333;
 background: #FFF;
+border: 3px solid ${props => props.focus ? '#52FFE0' : '#FFF'}
 `
 
 export const ModalFormText = styled.Text`

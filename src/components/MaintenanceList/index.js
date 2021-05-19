@@ -6,6 +6,7 @@ import { Modal, ScrollView, ToastAndroid, Alert } from 'react-native';
 import { Container, CustomView, Name, Price, Service, Date, Labor, TotalPrice, ModalTitle, ModalSubmitView, ModalContainer, ModalCustomViewInput, ModalFormText, ModalSubmitText, ModalForm, ModalSubmit, Submit, SubmitText, CustomViewRefreshDelete, ModalCustomView, ModalInput } from './styles';
 import Realm from 'realm';
 import getRealm from '~/services/realm'
+import { objectValidation } from '~/validations';
 
 
 // Format the money values to BRL format
@@ -29,6 +30,18 @@ const MaintenanceList = ({ data }) => {
   const [priceInput, setPriceInput] = useState(strip(Number(data.price)));
   const [laborInput, setLaborInput] = useState(strip(Number(data.labor)));
   const [dateInput, setDateInput] = useState(data.date);
+
+  const [nameFocus, setNameFocus] = useState(false);
+  const [serviceFocus, setServiceFocus] = useState(false);
+  const [priceFocus, setPriceFocus] = useState(false);
+  const [laborFocus, setLaborFocus] = useState(false);
+  const [dateFocus, setDateFocus] = useState(false);
+
+  const [nameError, setNameError] = useState(false);
+  const [serviceError, setServiceError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [laborError, setLaborError] = useState(false);
+  const [dateError, setDateError] = useState(false);
 
 
   // Toast
@@ -79,11 +92,31 @@ const MaintenanceList = ({ data }) => {
 
       const updateList = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
-      realmUpdate(updateList);
+      if (objectValidation(updateList)) {
+        realmUpdate(updateList);
 
-      setModalVisible(false);
+        setModalVisible(false);
 
-      toast('Registro atualizado com sucesso!');
+        toast('Registro atualizado com sucesso!');
+      } else {
+        if (!nameInput.trim()) {
+          setNameError(true);
+        }
+        if (!serviceInput.trim()) {
+          setServiceError(true);
+        }
+        if (!priceInput.trim()) {
+          setPriceError(true);
+        }
+        if (!laborInput.trim()) {
+          setLaborError(true);
+        }
+        if (!dateInput.trim()) {
+          setDateError(true);
+        }
+
+        toast('Todos os campos devem ser preenchidos!');
+      }
 
     } catch (err) {
       toast('Erro ao atualizar. Tente novamente.');
@@ -185,8 +218,11 @@ const MaintenanceList = ({ data }) => {
             >
 
               <ModalCustomViewInput>
-                <ModalFormText>Nome:</ModalFormText>
+                <ModalFormText style={{ color: nameError ? 'tomato' : '#FFF' }}>Nome:</ModalFormText>
                 <ModalInput
+                  focus={nameFocus}
+                  onFocus={() => setNameFocus(true)}
+                  onBlur={() => setNameFocus(false)}
                   value={nameInput}
                   onChangeText={setNameInput}
                   placeholder="Ex.: Mecânica de Autos"
@@ -194,8 +230,11 @@ const MaintenanceList = ({ data }) => {
               </ModalCustomViewInput>
 
               <ModalCustomViewInput>
-                <ModalFormText>Serviço:</ModalFormText>
+                <ModalFormText style={{ color: serviceError ? 'tomato' : '#FFF' }}>Serviço:</ModalFormText>
                 <ModalInput
+                  focus={serviceFocus}
+                  onFocus={() => setServiceFocus(true)}
+                  onBlur={() => setServiceFocus(false)}
                   value={serviceInput}
                   onChangeText={setServiceInput}
                   placeholder="Ex.: Troca de Óleo"
@@ -203,8 +242,11 @@ const MaintenanceList = ({ data }) => {
               </ModalCustomViewInput>
 
               <ModalCustomViewInput>
-                <ModalFormText>Valor:</ModalFormText>
+                <ModalFormText style={{ color: priceError ? 'tomato' : '#FFF' }}>Valor:</ModalFormText>
                 <ModalInput
+                  focus={priceFocus}
+                  onFocus={() => setPriceFocus(true)}
+                  onBlur={() => setPriceFocus(false)}
                   keyboardType="numeric"
                   value={priceInput}
                   onChangeText={(text) => {
@@ -218,8 +260,11 @@ const MaintenanceList = ({ data }) => {
               </ModalCustomViewInput>
 
               <ModalCustomViewInput>
-                <ModalFormText>Mão de Obra:</ModalFormText>
+                <ModalFormText style={{ color: laborError ? 'tomato' : '#FFF' }}>Mão de Obra:</ModalFormText>
                 <ModalInput
+                  focus={laborFocus}
+                  onFocus={() => setLaborFocus(true)}
+                  onBlur={() => setLaborFocus(false)}
                   keyboardType="numeric"
                   value={laborInput}
                   onChangeText={(text) => {
@@ -233,8 +278,11 @@ const MaintenanceList = ({ data }) => {
               </ModalCustomViewInput>
 
               <ModalCustomViewInput>
-                <ModalFormText>Data:</ModalFormText>
+                <ModalFormText style={{ color: dateError ? 'tomato' : '#FFF' }}>Data:</ModalFormText>
                 <ModalInput
+                  focus={dateFocus}
+                  onFocus={() => setDateFocus(true)}
+                  onBlur={() => setDateFocus(false)}
                   keyboardType="numeric"
                   value={dateInput}
                   onChangeText={(text) => {

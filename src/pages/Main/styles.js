@@ -47,7 +47,7 @@ font-weight: bold;
 
 export const Input = styled.TextInput`
 flex: 1;
-padding: 15px;
+padding: 8px 8px;
 border-radius: 4px;
 font-size: 16px;
 color: #333;

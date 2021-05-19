@@ -85,9 +85,9 @@ justify-content: space-between;
 
 export const ModalCustomViewInput = styled.View`
 flex: 1;
-padding-top: 25px;
-padding-right: 25px;
-padding-left: 25px;
+padding-top: 15px;
+padding-right: 15px;
+padding-left: 15px;
 `;
 
 export const ModalTitle = styled.Text`

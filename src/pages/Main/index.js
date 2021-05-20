@@ -60,8 +60,8 @@ const Main = () => {
   // Add a new register in database
   const handleAddMaintenance = () => {
     try {
-      let price = parseFloat(priceInput.replace(',', '.').replace(".", ""));
-      let labor = parseFloat(laborInput.replace(',', '.').replace(".", ""))
+      let price = parseFloat(priceInput.replace(',', '').replace('.', '') * 100);
+      let labor = parseFloat(laborInput.replace(',', '').replace('.', '') * 100);
 
       const list = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 

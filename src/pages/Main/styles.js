@@ -35,8 +35,8 @@ margin-top: 15px;
 margin-bottom: 5px;
 align-items: center;
 background-color: #FFF;
-border-radius: 10px;
-border: 3px solid ${props => props.focus ? '#52FFE0' : '#FFF'}
+border-radius: 4px;
+border: 3px solid ${props => props.focus ? '#00FF99' : '#FFF'}
 `;
 
 export const FormText = styled.Text`
@@ -58,7 +58,7 @@ export const Submit = styled.TouchableOpacity`
 background: #6BD4C1;
 margin-top: 10%;
 justify-content: center;
-border-radius: 4px;
+border-radius: 10px;
 padding: 14px;
 `;
 

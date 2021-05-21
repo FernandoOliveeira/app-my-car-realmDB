@@ -8,7 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import getRealm from '~/services/realm';
 import { DismissKeyboard } from '~/components/DismissKeyboard/index';
 import { Container, Title, Form, Input, Submit, SubmitText, FormView } from './styles';
-import { objectValidation } from '~/validations';
+import { dateValid, objectValidation } from '~/validations';
 
 
 const Main = () => {
@@ -67,28 +67,35 @@ const Main = () => {
 
       if (objectValidation(list)) {
 
-        saveMaintenance(list);
+        if (dateValid(dateInput)) {
 
-        // Set all inputs to empty
-        setNameInput('');
-        setServiceInput('');
-        setPriceInput('');
-        setLaborInput('');
-        setDateInput('');
+          saveMaintenance(list);
 
-        // Set all error to false
-        setNameError(false);
-        setServiceError(false);
-        setPriceError(false);
-        setLaborError(false);
-        setDateError(false);
+          // Set all inputs to empty
+          setNameInput('');
+          setServiceInput('');
+          setPriceInput('');
+          setLaborInput('');
+          setDateInput('');
 
-        Keyboard.dismiss();
-        toast('Registro salvo com sucesso!');
+          // Set all error to false
+          setNameError(false);
+          setServiceError(false);
+          setPriceError(false);
+          setLaborError(false);
+          setDateError(false);
+
+          Keyboard.dismiss();
+          toast('Registro salvo com sucesso!');
+
+        } else {
+          toast('Data inválida!');
+          setDateError(true);
+
+        }
 
       } else {
-
-        // Verify if all inputs has values. Case not,
+        // Verify if all inputs has values.
         if (!nameInput.trim()) {
           setNameError(true);
         }
@@ -106,12 +113,15 @@ const Main = () => {
         }
 
         toast('Todos os campos devem ser preenchidos!');
+
       }
     } catch (err) {
       toast('Não foi possível salvar o registro. Tente novamente.');
 
       console.log(`Failed to save maintenance: ${err}`);
     }
+
+
   }
 
   return (

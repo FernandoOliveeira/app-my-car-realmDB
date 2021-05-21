@@ -6,7 +6,7 @@ import { Modal, ScrollView, ToastAndroid, Alert } from 'react-native';
 import { Container, CustomView, Name, Price, Service, Date, Labor, TotalPrice, ModalTitle, ModalSubmitView, ModalContainer, ModalCustomViewInput, ModalFormText, ModalSubmitText, ModalForm, ModalSubmit, Submit, SubmitText, CustomViewRefreshDelete, ModalCustomView, ModalInput } from './styles';
 import Realm from 'realm';
 import getRealm from '~/services/realm'
-import { objectValidation } from '~/validations';
+import { objectValidation, dateValid } from '~/validations';
 
 
 // Format the money values to BRL format
@@ -93,11 +93,28 @@ const MaintenanceList = ({ data }) => {
       const updateList = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
       if (objectValidation(updateList)) {
-        realmUpdate(updateList);
 
-        setModalVisible(false);
+        if (dateValid(dateInput)) {
+          realmUpdate(updateList);
 
-        toast('Registro atualizado com sucesso!');
+          setNameError(false);
+          setServiceError(false);
+          setPriceError(false);
+          setLaborError(false);
+          setDateError(false);
+
+          setModalVisible(false);
+
+          toast('Registro atualizado com sucesso!');
+
+        } else {
+
+          toast('Data inválida!');
+          setDateError(true);
+
+        }
+
+
       } else {
         if (!nameInput.trim()) {
           setNameError(true);
@@ -280,6 +297,7 @@ const MaintenanceList = ({ data }) => {
               <ModalCustomViewInput>
                 <ModalFormText style={{ color: dateError ? 'tomato' : '#FFF' }}>Data:</ModalFormText>
                 <ModalInput
+                  maxLength={10}
                   focus={dateFocus}
                   onFocus={() => setDateFocus(true)}
                   onBlur={() => setDateFocus(false)}
@@ -313,6 +331,12 @@ const MaintenanceList = ({ data }) => {
                     setPriceInput(strip(Number(data.price)));
                     setLaborInput(strip(Number(data.labor)));
                     setDateInput(data.date);
+
+                    setNameError(false);
+                    setServiceError(false);
+                    setPriceError(false);
+                    setLaborError(false);
+                    setDateError(false);
 
                     setModalVisible(false);
                   }}>

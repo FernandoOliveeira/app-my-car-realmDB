@@ -28,9 +28,18 @@ padding: 5%;
 text-align: center;
 `;
 
+export const Empty = styled.Text`
+font-size: 20px;
+color: #999;
+font-weight: bold;
+padding: 5%;
+text-align: center;
+`;
+
 export const List = styled.FlatList.attrs({
   contentContainerStyle: { paddingHorizontal: 20 },
   showsVerticalScrollIndicator: false,
 })`
+flex: 1;
 margin-top: 20px;
 `;

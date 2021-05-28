@@ -3,7 +3,7 @@ import getRealm from '~/services/realm';
 import { RefreshControl } from 'react-native';
 
 import MaintenanceList from '~/components/MaintenanceList';
-import { Container, Title, Total, List } from './styles';
+import { Container, Title, Total, Empty, List } from './styles';
 
 
 
@@ -11,7 +11,7 @@ const Maintenances = ({ navigation }) => {
   // Hooks
   const [maintenance, setMaintenance] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(-1);
 
   // Timer
   const wait = (timeout) => {
@@ -49,7 +49,7 @@ const Maintenances = ({ navigation }) => {
 
     } catch (err) {
       console.log(`Failed to set maintenance total. ${err}`);
-      setTotal(0);
+      setTotal(-1);
 
     }
   }
@@ -84,6 +84,7 @@ const Maintenances = ({ navigation }) => {
 
       {/* List */}
       <List
+        ListEmptyComponent={<Empty>Está meio vazio por aqui...{"\n\n"}Aqui serão exibidos os novos registros!</Empty>}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -97,7 +98,12 @@ const Maintenances = ({ navigation }) => {
         )}
       />
 
-      <Total>Total: {strip(Number(total))}R$</Total>
+      {/* Total */}
+      { total >= 0 ?
+        <Total>Total: {strip(Number(total))}R$</Total>
+        : null
+      }
+
     </Container>
   );
 }

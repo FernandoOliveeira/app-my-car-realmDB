@@ -18,7 +18,7 @@ const moneyFormat = (value) => {
   return value
 }
 // Set number to only two decimals numbers
-const strip = number => moneyFormat((parseFloat(number.toPrecision(12)).toFixed(2) / 100).toString());
+const strip = number => moneyFormat((Number(number.toPrecision(12)).toFixed(2) / 100).toString());
 
 
 
@@ -87,8 +87,8 @@ const MaintenanceList = ({ data }) => {
   // Update Modal Button
   const handleUpdateButton = () => {
     try {
-      let price = parseFloat(priceInput.replace(',', '').replace('.', '') * 100);
-      let labor = parseFloat(laborInput.replace(',', '').replace('.', '') * 100);
+      let price = Number(priceInput.replace(',', '').replace('.', '') * 100);
+      let labor = Number(laborInput.replace(',', '').replace('.', '') * 100);
 
       const updateList = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
@@ -186,7 +186,7 @@ const MaintenanceList = ({ data }) => {
 
       <CustomView>
         <MaterialCommunityIcons name={'barcode'} size={30} color={'#666'} style={{ paddingRight: '3%' }} />
-        <TotalPrice>Total: {strip((data.labor + data.price))} R$</TotalPrice>
+        <TotalPrice>Total: {strip(Number(data.labor + data.price))} R$</TotalPrice>
       </CustomView>
 
       <CustomView>

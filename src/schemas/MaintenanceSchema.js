@@ -5,8 +5,8 @@ export default class MaintenanceSchema {
       id: { type: "string", indexed: true },
       name: "string",
       service: "string",
-      price: "float",
-      labor: "float",
+      price: "int",
+      labor: "int",
       date: "string"
     },
     primaryKey: "id"

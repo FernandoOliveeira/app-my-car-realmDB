@@ -60,8 +60,8 @@ const Main = () => {
   // Add a new register in database
   const handleAddMaintenance = () => {
     try {
-      let price = parseFloat(priceInput.replace(',', '').replace('.', '') * 100);
-      let labor = parseFloat(laborInput.replace(',', '').replace('.', '') * 100);
+      let price = Number(priceInput.replace(',', '').replace('.', '') * 100);
+      let labor = Number(laborInput.replace(',', '').replace('.', '') * 100);
 
       const list = { nameInput, serviceInput, priceInput: price, laborInput: labor, dateInput }
 
@@ -176,6 +176,7 @@ const Main = () => {
                 <Input
                   placeholderTextColor={priceError ? 'tomato' : '#666'}
                   keyboardType="numeric"
+                  maxLength={10}
                   value={priceInput}
                   onChangeText={(text) => {
                     text = text.replace(/\D/g, "");
@@ -197,6 +198,7 @@ const Main = () => {
                 <Input
                   placeholderTextColor={laborError ? 'tomato' : '#666'}
                   keyboardType="numeric"
+                  maxLength={10}
                   value={laborInput}
                   onChangeText={(text) => {
                     text = text.replace(/\D/g, "");

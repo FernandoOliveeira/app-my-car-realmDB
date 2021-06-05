@@ -27,7 +27,7 @@ const Maintenances = ({ navigation }) => {
     return value;
   }
   // Set number to only two decimals numbers
-  const strip = number => moneyFormat((parseFloat(number.toPrecision(12)).toFixed(2) / 100).toString());
+  const strip = number => moneyFormat((Number(number.toPrecision(12)).toFixed(2) / 100).toString());
 
   // .reduce callback
   const reducer = (accumulator, currentValue) => accumulator + currentValue;

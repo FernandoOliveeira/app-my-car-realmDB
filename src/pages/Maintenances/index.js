@@ -5,7 +5,7 @@ import { RefreshControl } from 'react-native';
 import MaintenanceList from '~/components/MaintenanceList';
 import { Container, Title, Total, Empty, List } from './styles';
 
-
+let totalMaintenance = []
 
 const Maintenances = ({ navigation }) => {
   // Hooks
@@ -34,31 +34,29 @@ const Maintenances = ({ navigation }) => {
 
   // Load the all registers from database and save in to maintenance hook
   const loadMaintenances = async () => {
-    const realm = await getRealm();
 
-    const data = realm.objects('List');
-
-    setMaintenance(data);
-  }
-
-  // Sums all total values in the list
-  const sumTotal = () => {
     try {
-      setTotal(maintenance.map((data) => data.price + data.labor).reduce(reducer));
-      console.log(maintenance.map((data) => data.price))
+      const realm = await getRealm();
+
+      const data = realm.objects('List');
+
+      setMaintenance(data);
+      totalMaintenance = data;
+      setTotal(totalMaintenance.map((data) => data.price + data.labor).reduce(reducer));
 
     } catch (err) {
+      totalMaintenance = [];
       console.log(`Failed to set maintenance total. ${err}`);
       setTotal(-1);
 
     }
   }
 
+
   // Load all the maintenances in to the screen
   useEffect(() => {
     const load = navigation.addListener('focus', () => {
       loadMaintenances();
-      sumTotal();
 
     });
 
@@ -72,7 +70,6 @@ const Maintenances = ({ navigation }) => {
     wait(1000).then(() => {
       setRefreshing(false);
       loadMaintenances();
-      sumTotal();
     });
 
   }, []);

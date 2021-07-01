@@ -14,7 +14,7 @@
 
 ## :bulb: About 
 The ideia of this project came from a problem that my mother was dealing with: She couldn't track how much money (in total) she was spending with her car maintenances.
-So I came up with this simple app, with basic functionalities, where she can register the name of the auto shop, the service that was made, how much for the parts, how much for the labor and the date.
+So I came up with this simple app, where she can register the name of the auto shop, the service that was made, how much for the parts, how much for the labor and the date.
 
 ##  :gear: Installation
 Before the installation, be sure that you have your development environment properly set up.  
@@ -76,7 +76,7 @@ After you save the informations, you can see, update/delete any record in mainte
 </p>  
 
 ## :hammer_and_wrench: Technologies  
-The following tools where used in this project:
+The following tools were used in this project:
  - [React Native](https://reactnative.dev/)
  - [Node.js](https://nodejs.org/en/)
 

@@ -26,7 +26,7 @@ After you set your development environment up, you can continue.
 * Follow the steps bellow to install the project on your machine:
 ```
 1. git clone https://github.com/FernandoOliveeira/app-my-car-realmDB.git
-2. cd mycarrealm
+2. cd app-my-car-realmDB
 ```
 * Install the dependencies and run the app:
 ```

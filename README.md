@@ -77,8 +77,13 @@ After you save the informations, you can see, update/delete any record in mainte
 
 ## :hammer_and_wrench: Technologies  
 The following tools were used in this project:
+ - [MomentJs](https://momentjs.com/)
+ - [Realm Database](https://realm.io/)
  - [React Native](https://reactnative.dev/)
- - [Node.js](https://nodejs.org/en/)
+ - [React Native Styled Components](https://styled-components.com/)
+ - [React Native Tab Navigation](https://reactnavigation.org/docs/tab-based-navigation/)
+ - [React Native UUID](https://github.com/eugenehp/react-native-uuid) 
+ - [Rocketseat Template](https://github.com/Rocketseat/react-native-template-rocketseat-basic)
 
 
   

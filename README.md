@@ -13,7 +13,7 @@
  <!--te-->
 
 ## :bulb: About 
-The ideia of this project came from a problem that my mother was dealing with: She couldn't track how much money (in total) she was spending with her car maintenances.
+The ideia of this project came from a problem that my mother was dealing with: She couldn't keep track how much money (in total) she was spending with her car maintenances.
 So I came up with this simple app, where she can register the name of the auto shop, the service that was made, how much for the parts, how much for the labor and the date.
 
 ##  :gear: Installation
